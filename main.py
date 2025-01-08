@@ -269,7 +269,7 @@ async def handle_reply_buttons(message: types.Message, bot: Bot):
                 InlineKeyboardButton(text="500 ⭐️", callback_data="500")
             )
             withdraw_stars_markup = builder.as_markup()
-            await bot.send_message(message.chat.id, f"<b>У тебя на счету: {stars}\n\n(По всем вопросам - @kalipsom)\n\nВыбери сколько звезд хочешь получить:</b>", parse_mode='HTML', reply_markup=withdraw_stars_markup)
+            await bot.send_message(message.chat.id, f"<b>У тебя на счету: {stars}\n\n(По всем вопросам - @wuspy)\n\nВыбери сколько звезд хочешь получить:</b>", parse_mode='HTML', reply_markup=withdraw_stars_markup)
     elif message.text == "🤑 Мой баланс":
         user_data = get_user(user_id)
         builder = InlineKeyboardBuilder()
