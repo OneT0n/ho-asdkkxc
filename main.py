@@ -16,7 +16,7 @@ from settings import *
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token=8122763088:AAGC9PD-goT6ZmxhxgIT44-BrllUcLHH1gI)
+bot = Bot(token=TOKEN)
 dp = Dispatcher()
 router = Router()
 
