@@ -389,7 +389,7 @@ async def check_subscription(user_id, channel_ids, bot: Bot):
 
         # Изменяем текст кнопки на более подходящее описание
         builder.row(
-            InlineKeyboardButton(text="🥶 Обязательная подписка!, url="https://t.me/+QGpgBOLMLWI3ZDUy")
+            InlineKeyboardButton(text="🥶 Обязательная подписка!", url="https://t.me/+QGpgBOLMLWI3ZDUy")
         )
         
         builder.row(
