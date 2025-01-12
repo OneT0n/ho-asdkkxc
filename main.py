@@ -348,7 +348,7 @@ async def handle_stars_callback(call: types.CallbackQuery, bot: Bot, state: FSMC
             reff_link = f"https://t.me/{(await bot.me()).username}?start={user_id}"
             builder = InlineKeyboardBuilder()
             builder.row(
-                InlineKeyboardButton(text="Поделись ка ссылкой", url="https://t.me/share/url?url=" + reff_link)
+                InlineKeyboardButton(text="Поделись ссылкой ☺️", url="https://t.me/share/url?url=" + reff_link)
             )
             markup = builder.as_markup()
             await bot.send_message(user_id, "Главное меню!", reply_markup=get_main_keyboard())
@@ -384,10 +384,10 @@ async def check_subscription(user_id, channel_ids, bot: Bot):
 
     if show_join_button:
         builder.row(
-            InlineKeyboardButton(text="Давай ка проверим подписки", callback_data="check_subs")
+            InlineKeyboardButton(text="🤑 Проверим подписки..", callback_data="check_subs")
         )
         markup = builder.as_markup()
-        await bot.send_message(user_id, "<b>Приветствую дорогой(-ая) \n\nПожалуйста подпишись на каналы, чтобы продолжить!</b>", parse_mode='HTML', reply_markup=markup)
+        await bot.send_message(user_id, "<b>🧐 Приветствую дорогой(-ая) \n\nПожалуйста подпишись на каналы, чтобы продолжить!</b>", parse_mode='HTML', reply_markup=markup)
         return True
 
     return False
