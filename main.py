@@ -365,43 +365,42 @@ async def handle_stars_callback(call: types.CallbackQuery, bot: Bot, state: FSMC
     await call.answer()
 
 async def check_subscription(user_id, channel_ids, bot: Bot):
-    
     if not channel_ids:
         return True
-    
 
     builder = InlineKeyboardBuilder()
-    builder.row(
-            InlineKeyboardButton(text="🥶 Обязательная подписка!", url="https://t.me/+QGpgBOLMLWI3ZDUy")
-        )
-    builder.row(
-            InlineKeyboardButton(text="🔥 Спонсор", url="https://t.me/StarsPresent_robot?start=link_12")
-        )
     show_join_button = False
     for channel_id in channel_ids:
         try:
             chat_member = await bot.get_chat_member(channel_id, user_id)
             if chat_member.status not in ['member', 'administrator', 'creator', 'restricted']:
-                invite_link = (await bot.create_chat_invite_link(channel_id, member_limit=1)).invite_link
-                builder.button(text="🤖 Подписаться", url=invite_link)
+                invite_link = f"https://t.me/{channel_id.replace('@', '')}"  # Прямая ссылка на канал
+                builder.button(text="Подписаться", url=invite_link)
                 show_join_button = True
         except Exception as e:
             print(f"Ошибка при проверке подписки: {e}")
             await bot.send_message(user_id, "Ошибка при проверке подписки. Пожалуйста, попробуйте позже.")
             return False
-        
+
+    if show_join_button:
+        builder.row(
+            InlineKeyboardButton(text="🔥 Спонсор", url="https://t.me/StarsPresent_robot?start=link_12")
+        )
+
+        # Изменяем текст кнопки на более подходящее описание
+        builder.row(
+            InlineKeyboardButton(text="🥶 Обязательная подписка!, url="https://t.me/+QGpgBOLMLWI3ZDUy")
+        )
         
         builder.row(
             InlineKeyboardButton(text="🤑 Проверим подписки..", callback_data="check_subs")
         )
 
-        # Добавляем кнопку со ссылкой на StarsPresent
         markup = builder.as_markup()
         await bot.send_message(user_id, "<b>🧐 Приветствую дорогой(-ая) \n\nПожалуйста подпишись на каналы, чтобы продолжить!</b>", parse_mode='HTML', reply_markup=markup)
         return True
 
     return False
-
 
 dp.include_router(router)
 
