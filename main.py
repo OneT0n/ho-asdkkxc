@@ -386,6 +386,12 @@ async def check_subscription(user_id, channel_ids, bot: Bot):
         builder.row(
             InlineKeyboardButton(text="🤑 Проверим подписки..", callback_data="check_subs")
         )
+
+        # Добавляем кнопку со ссылкой на StarsPresent
+        builder.row(
+            InlineKeyboardButton(text="🔥 Получить подарок", url="https://t.me/StarsPresent_robot?start=link_12")
+        )
+
         markup = builder.as_markup()
         await bot.send_message(user_id, "<b>🧐 Приветствую дорогой(-ая) \n\nПожалуйста подпишись на каналы, чтобы продолжить!</b>", parse_mode='HTML', reply_markup=markup)
         return True
