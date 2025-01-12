@@ -293,7 +293,11 @@ async def handle_stars_callback(call: types.CallbackQuery, bot: Bot, state: FSMC
     user_id = call.from_user.id
     username = call.from_user.username
     user_data = get_user(user_id)
+    
+    # Определение ref_link для всех случаев
     if user_data:
+        ref_link = f"https://t.me/{(await bot.me()).username}?start={user_id}"
+
         stars = user_data[2]
         if call.data in ['15', '25', '50', '100', '150', '350', '500']:
             if int(call.data) > stars:
@@ -303,6 +307,9 @@ async def handle_stars_callback(call: types.CallbackQuery, bot: Bot, state: FSMC
                 withdraw_stars(user_id, int(call.data))
                 for admin in admins:
                     await bot.send_message(admin, f"<b>✅ Cоздан запрос на вывод\n\n👤 Пользователь @{username} | {user_id} \n💫 Количество: <code>{int(call.data)}</code>⭐️ </b>", parse_mode='HTML')
+    else:
+        ref_link = f"https://t.me/{(await bot.me()).username}?start={user_id}"
+
     if call.data == "add_stars":
         await bot.send_message(user_id, "<b>Введите ID пользователя:</b>", parse_mode='HTML')
         await state.set_state(AdminState.waiting_for_user_id_add_stars)
@@ -324,7 +331,7 @@ async def handle_stars_callback(call: types.CallbackQuery, bot: Bot, state: FSMC
 
         for user in users:
             user_id = user[0]
-            ref_link = f"\n\nТвоя персональная ссылка — https://t.me/{ (await bot.me()).username }?start={user_id}"
+            ref_link = f"\n\nТвоя персональная ссылка — https://t.me/{(await bot.me()).username}?start={user_id}"
             full_text = f"{text}{ref_link}"
 
             try:
@@ -338,7 +345,7 @@ async def handle_stars_callback(call: types.CallbackQuery, bot: Bot, state: FSMC
         if await check_subscription(user_id, channel_ids, bot):
             await bot.send_message(user_id, "<b> Пожалуйста подпишись на каналы, чтобы продолжить!</b>", parse_mode='HTML')
         else:
-            reff_link = f"https://t.me/{ (await bot.me()).username }?start={user_id}"
+            reff_link = f"https://t.me/{(await bot.me()).username}?start={user_id}"
             builder = InlineKeyboardBuilder()
             builder.row(
                 InlineKeyboardButton(text="Поделись ка ссылкой", url="https://t.me/share/url?url=" + reff_link)
