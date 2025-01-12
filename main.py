@@ -192,25 +192,25 @@ async def handle_start(message: types.Message, bot: Bot):
         if len(args) > 1 and args[1].isdigit():
             referral_id = int(args[1])
             if user_exists(referral_id):
-                await bot.send_message(referral_id, f"<b>💥Поздравляем! Новый пользователь успешно перешел по вашей реферальной ссылке!\n\nНа ваш баланс зачислено +0.65⭐️\n\nПоделись ссылкой — {ref_link}</b>", parse_mode='HTML')
+                await bot.send_message(referral_id, f"<b>💥Поздравляем! Новый пользователь успешно перешел по вашей реферальной ссылке!\n\nНа ваш баланс зачислено +2⭐️\n\nПоделись ссылкой — {ref_link}</b>", parse_mode='HTML')
                 increment_referrals(referral_id)
-                increment_stars(referral_id, 0.65)
+                increment_stars(referral_id, 1.65)
         add_user(user_id, username, referral_id)
         await bot.send_message(user_id, "Главное меню!", reply_markup=get_main_keyboard())
-        await bot.send_message(user_id, f"<b>🔥 Приветствуем!\n\nДелитесь своей ссылкой и получайте +0.65 ⭐️ за каждого приглашенного друга!\n\n⛓️‍💥Твоя ссылка - {ref_link}</b>", parse_mode='HTML', reply_markup=markup)
+        await bot.send_message(user_id, f"<b>🔥 Приветствуем!\n\nДелитесь своей ссылкой и получайте +1.65 ⭐️ за каждого приглашенного друга!\n\n⛓️‍💥Твоя ссылка - {ref_link}</b>", parse_mode='HTML', reply_markup=markup)
     else:
         if len(channel_ids) > 0:
             if await check_subscription(user_id, channel_ids, bot):
                 return
         await bot.send_message(user_id, "Главное меню!", reply_markup=get_main_keyboard())
-        await bot.send_message(user_id, f"<b>🔥 Приветствуем!\n\nДелитесь своей ссылкой и получайте +0.65 ⭐️ за каждого приглашенного друга!\n\n⛓️‍💥Твоя ссылка - {ref_link}</b>", parse_mode='HTML', reply_markup=markup)
+        await bot.send_message(user_id, f"<b>🔥 Приветствуем!\n\nДелитесь своей ссылкой и получайте +1.65 ⭐️ за каждого приглашенного друга!\n\n⛓️‍💥Твоя ссылка - {ref_link}</b>", parse_mode='HTML', reply_markup=markup)
 
 @router.message(Command("why"))
 async def handle_why_command(message: types.Message, bot: Bot):
     user_id = message.from_user.id
     ref_link = f"https://t.me/{ (await bot.me()).username }?start={user_id}"
     if user_exists(user_id):
-        await bot.send_message(user_id, f"🌟 В Telegram звезды — это <b>официальная</b> валюта. Приглашай друзей и получай по 0.65⭐️ за каждого! Звезды можно продавать, дарить друзьям или использовать для оплаты услуг в ботах и приложениях. Делись своей ссылкой и зарабатывай! {ref_link}</i>", parse_mode='HTML')
+        await bot.send_message(user_id, f"🌟 В Telegram звезды — это <b>официальная</b> валюта. Приглашай друзей и получай по 1.65⭐️ за каждого! Звезды можно продавать, дарить друзьям или использовать для оплаты услуг в ботах и приложениях. Делись своей ссылкой и зарабатывай! {ref_link}</i>", parse_mode='HTML')
     else:
         await bot.send_message(user_id, "Используйте пожалуйста команду /start, чтобы зарегистрироваться. (P.S) без него никак :(( ")
 
@@ -247,7 +247,7 @@ async def handle_reply_buttons(message: types.Message, bot: Bot):
         builder = InlineKeyboardBuilder()
         builder.button(text="Поделись ка ссылкой с друзьями :)", url=f"https://t.me/share/url?url={ref_link}")
         markup = builder.as_markup()
-        await bot.send_message(message.chat.id, f"<b>🎉Ну же! Приглашай друзей, знакомых и получай +0.65 ⭐️ за каждого!\n\nОтправляй свою ссылку:\n\n• в ЛС знакомым\n• в свой телеграм канал\n• по чужим группам\n• в комментариях тик тока\n• вк/инст/ватсап и др. соц сети\n\n🔗 Твоя единственная ссылка - {ref_link}</b>", parse_mode='HTML', reply_markup=markup)
+        await bot.send_message(message.chat.id, f"<b>🎉Ну же! Приглашай друзей, знакомых и получай +1.65 ⭐️ за каждого!\n\nОтправляй свою ссылку:\n\n• в ЛС знакомым\n• в свой телеграм канал\n• по чужим группам\n• в комментариях тик тока\n• вк/инст/ватсап и др. соц сети\n\n🔗 Твоя единственная ссылка - {ref_link}</b>", parse_mode='HTML', reply_markup=markup)
     elif message.text == "💸 Вывести звёзды":
         user_data = get_user(user_id)
         if user_data:
@@ -326,7 +326,7 @@ async def handle_stars_callback(call: types.CallbackQuery, bot: Bot, state: FSMC
         await bot.send_message(user_id, "<b>Введите ID канала:</b>", parse_mode='HTML')
         await state.set_state(AdminState.waiting_for_channel_id_delete)
     if call.data == 'mailing_zero_refs':
-        text = "⁉️🤨Мы заметили, что вы не пригласили ни 1 друга!\n\nПерешли ссылку своим друзьям, а также по чатам, 0.65 ⭐️ за 1 приглашенного⤵️"
+        text = "⁉️🤨Мы заметили, что вы не пригласили ни 1 друга!\n\nПерешли ссылку своим друзьям, а также по чатам, 1.65 ⭐️ за 1 приглашенного⤵️"
         users = get_user_zero_referrals()
 
         for user in users:
@@ -352,7 +352,7 @@ async def handle_stars_callback(call: types.CallbackQuery, bot: Bot, state: FSMC
             )
             markup = builder.as_markup()
             await bot.send_message(user_id, "Главное меню!", reply_markup=get_main_keyboard())
-            await bot.send_message(user_id, f"<b>🔥 Приветствуем!\n\nДелитесь своей ссылкой и получайте +0.65 ⭐️ за каждого приглашенного друга!\n\n⛓️‍💥Твоя ссылка - {ref_link}</b>", parse_mode='HTML', reply_markup=markup)
+            await bot.send_message(user_id, f"<b>🔥 Приветствуем!\n\nДелитесь своей ссылкой и получайте +1.65 ⭐️ за каждого приглашенного друга!\n\n⛓️‍💥Твоя ссылка - {ref_link}</b>", parse_mode='HTML', reply_markup=markup)
     if call.data == "promocode":
         await bot.send_message(user_id, "<b>🎄 Введите промокод:</b>", parse_mode='HTML')
         await state.set_state(AdminState.waiting_for_promocode_activation)
